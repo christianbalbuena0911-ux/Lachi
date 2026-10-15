@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday, Wife HAHA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sea:#14556E;
+  --deep:#0a506b;
+  --lagoon:#45C7C4;
+  --hibiscus:#FF6E8A;
+  --sun:#FFD25A;
+  --sand:#ffd085;
+  --ink:#0C3B4E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:var(--sand);overflow-x:hidden}
+body.locked{overflow:hidden;height:100vh}
+
+/* ---------- password gate ---------- */
+.gate{
+  position:fixed;inset:0;z-index:999;
+  display:grid;place-items:center;padding:24px;text-align:center;
+  background:radial-gradient(120% 80% at 50% 0%, #2E90A8 0%, var(--sea) 45%, var(--deep) 100%);
+  color:var(--sand);
+  transition:opacity .6s ease, visibility .6s ease;
+}
+.gate.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.gate-card{max-width:360px;width:100%}
+.gate-card .emoji{font-size:2.6rem;margin-bottom:6px}
+.gate-card h2{font-family:'Baloo 2',cursive;font-size:1.7rem;margin-bottom:8px}
+.gate-card p{color:#DDF3F5;margin-bottom:20px;line-height:1.6}
+.gate-form{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.gate-form input{
+  flex:1;min-width:160px;
+  padding:13px 16px;border-radius:999px;border:2px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.1);color:#fff;font-size:1rem;
+  font-family:'Nunito',sans-serif;text-align:center;letter-spacing:.05em;
+}
+.gate-form input::placeholder{color:#B9DEE2}
+.gate-form input:focus{outline:none;border-color:var(--sun)}
+.gate-form button{
+  font-family:'Baloo 2',cursive;font-weight:700;
+  background:var(--hibiscus);color:#fff;border:none;border-radius:999px;
+  padding:13px 26px;cursor:pointer;box-shadow:0 5px 0 #D44E69;
+  transition:transform .12s ease;
+}
+.gate-form button:hover{transform:translateY(-2px)}
+.gate-form button:active{transform:translateY(3px);box-shadow:0 2px 0 #D44E69}
+.gate-error{margin-top:12px;color:var(--sun);min-height:1.2em;font-size:.92rem}
+
+/* ---------- floating background bits ---------- */
+.floaties{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.floaty{position:absolute;bottom:-60px;opacity:.55;animation:rise linear infinite}
+@keyframes rise{
+  0%{transform:translateY(0) rotate(0deg);opacity:0}
+  10%,90%{opacity:.6}
+  100%{transform:translateY(-115vh) rotate(320deg);opacity:0}
+}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;z-index:1;min-height:100svh;
+  display:grid;place-items:center;text-align:center;
+  padding:32px 20px 100px;
+  background:radial-gradient(120% 80% at 50% 0%, #2E90A8 0%, var(--sea) 45%, var(--deep) 100%);
+  color:var(--sand);overflow:hidden;
+}
+.hero-inner{max-width:680px;position:relative;z-index:2}
+
+/* ---------- line-art doodles (subtle, hand-sketched feel) ---------- */
+.doodles{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.doodles svg{position:absolute;stroke:rgba(255,244,226,.55);fill:none;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.doodles svg.flower{stroke:rgba(152,224,232,.65)}
+.d7{top:30%;right:4%;width:44px;animation:driftA 7.5s ease-in-out infinite}
+.d8{top:64%;left:14%;width:36px;animation:driftB 9.5s ease-in-out infinite}
+.d9{top:4%;right:30%;width:40px;animation:driftA 6s ease-in-out infinite reverse}
+.d1{top:8%;left:6%;width:64px;animation:driftA 9s ease-in-out infinite}
+.d2{top:16%;right:8%;width:46px;animation:driftB 7s ease-in-out infinite}
+.d3{bottom:14%;left:9%;width:38px;animation:driftA 8s ease-in-out infinite reverse}
+.d4{bottom:22%;right:12%;width:70px;animation:driftB 10s ease-in-out infinite}
+.d5{top:46%;left:3%;width:30px;animation:driftA 6.5s ease-in-out infinite}
+.d6{top:6%;left:42%;width:34px;animation:driftB 8.5s ease-in-out infinite}
+@keyframes driftA{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-10px) rotate(6deg)}}
+@keyframes driftB{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(8px) rotate(-5deg)}}
+/* ---------- blue flower bloom ---------- */
+.flower-wrap{position:absolute;pointer-events:none;z-index:1}
+.flower-wrap.fw1{top:10%;left:5%;width:74px}
+.flower-wrap.fw2{bottom:10%;right:6%;width:58px}
+.flower-petals{transform-origin:32px 32px;animation:bloom 5s ease-in-out infinite}
+.flower-petals path{transform-origin:32px 32px;animation:petalOpen 5s ease-in-out infinite}
+.flower-petals path:nth-child(1){animation-delay:0s}
+.flower-petals path:nth-child(2){animation-delay:.08s}
+.flower-petals path:nth-child(3){animation-delay:.16s}
+.flower-petals path:nth-child(4){animation-delay:.24s}
+.flower-petals path:nth-child(5){animation-delay:.32s}
+.flower-petals path:nth-child(6){animation-delay:.4s}
+@keyframes petalOpen{
+  0%,100%{transform:scale(.78);opacity:.7}
+  50%{transform:scale(1);opacity:1}
+}
+@keyframes bloom{0%,100%{transform:rotate(0deg)}50%{transform:rotate(6deg)}}
+.eyebrow{font-size:clamp(.95rem,3.2vw,1.15rem);color:var(--sun);margin-bottom:6px}
+h1{
+  font-family:'Baloo 2',cursive;font-weight:800;
+  font-size:clamp(2.6rem,11vw,5.2rem);line-height:.95;
+  text-shadow:0 6px 0 rgba(0,0,0,.18);
+}
+h1 .letter{display:inline-block;animation:pop .6s cubic-bezier(.3,1.6,.5,1) backwards}
+@keyframes pop{from{transform:translateY(40px) scale(.4) rotate(-12deg);opacity:0}to{transform:none;opacity:1}}
+.sub{margin:18px auto 0;max-width:42ch;font-size:clamp(1rem,3.6vw,1.2rem);line-height:1.65;color:#DDF3F5}
+
+/* ---------- sticker slots ---------- */
+.buddy{width:min(230px,58vw);margin:22px auto 0;display:block;animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+
+.sticker{display:none}                 /* hidden until the image actually loads */
+.sticker.ready{display:block}
+
+/* MIRROR TWINS: ang `scale:-1 1` ang nagfi-flip ng sticker (pati yung galaw niya) */
+.sticker.mirror{scale:-1 1}
+
+#sticker1{width:min(240px,60vw);margin:22px auto 0;animation:bob 3.2s ease-in-out infinite}
+
+/* sticker 2 + twin: sumisilip sa gilid ng gift section */
+#sticker2{
+  position:absolute;right:-10px;top:40px;width:min(130px,28vw);
+  animation:peek 4.5s ease-in-out infinite;pointer-events:none;
+}
+#sticker2m{
+  position:absolute;left:-10px;top:40px;width:min(130px,28vw);
+  animation:peek 4.5s ease-in-out infinite;pointer-events:none;
+}
+@keyframes peek{
+  0%,100%{transform:translateX(30%) rotate(8deg)}
+  50%{transform:translateX(0) rotate(-4deg)}
+}
+
+/* sticker 3 + twin: magkabilang gilid ng gift, nagwi-wiggle */
+#sticker3{
+  position:absolute;left:8px;bottom:-6px;width:min(110px,24vw);
+  animation:wiggle 2.4s ease-in-out infinite;pointer-events:none;
+}
+#sticker3m{
+  position:absolute;right:8px;bottom:-6px;width:min(110px,24vw);
+  animation:wiggle 2.4s ease-in-out infinite;pointer-events:none;
+}
+@keyframes wiggle{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+
+.bouquet{
+  display:flex;justify-content:center;padding:20px 20px 24px;
+  animation:bouquetSway 5s ease-in-out infinite;
+}
+.bouquet svg{width:min(560px,92vw);height:auto}
+@keyframes bouquetSway{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
+
+/* sticker 5 + twin: sulok ng photo section, tumatango */
+#sticker5{
+  position:absolute;left:-12px;top:-20px;width:min(100px,22vw);
+  animation:nod 3s ease-in-out infinite;pointer-events:none;z-index:2;
+}
+#sticker5m{
+  position:absolute;right:-12px;top:-20px;width:min(100px,22vw);
+  animation:nod 3s ease-in-out infinite;pointer-events:none;z-index:2;
+}
+@keyframes nod{0%,100%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(4deg) translateY(-6px)}}
+
+/* sticker 6 + twin: ibabang sulok ng photo section, nakabalanse */
+#sticker6{
+  position:absolute;right:-30px;bottom:-15px;width:min(95px,20vw);
+  animation:sway 4s ease-in-out infinite;pointer-events:none;z-index:2;
+}
+#sticker6m{
+  position:absolute;left:-30px;bottom:-15px;width:min(95px,20vw);
+  animation:sway 4s ease-in-out infinite;pointer-events:none;z-index:2;
+}
+@keyframes sway{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-6deg)}}
+
+/* sticker 7 + twin: sa bouquet section, sumasayaw */
+#sticker7{
+  position:absolute;right:-16px;top:20px;width:min(105px,24vw);
+  animation:dance 2.2s ease-in-out infinite;pointer-events:none;z-index:2;
+}
+#sticker7m{
+  position:absolute;left:-16px;top:20px;width:min(105px,24vw);
+  animation:dance 2.2s ease-in-out infinite;pointer-events:none;z-index:2;
+}
+@keyframes dance{0%,100%{transform:translateY(0) rotate(-4deg)}25%{transform:translateY(-8px) rotate(3deg)}50%{transform:translateY(0) rotate(-4deg)}75%{transform:translateY(-4px) rotate(4deg)}}
+
+/* sticker 8 + twin: sa hero, lumulutang sa magkabilang gilid */
+#sticker8{
+  position:absolute;left:-6px;top:60px;width:min(110px,24vw);
+  animation:float8 5s ease-in-out infinite;pointer-events:none;z-index:2;
+}
+#sticker8m{
+  position:absolute;right:-6px;top:60px;width:min(110px,24vw);
+  animation:float8 5s ease-in-out infinite;pointer-events:none;z-index:2;
+}
+@keyframes float8{0%,100%{transform:translate(0,0) rotate(-3deg)}50%{transform:translate(10px,-16px) rotate(5deg)}}
+
+/* sticker 9 + twin: sa footer, magkabilang gilid ng text */
+.foot-row{display:flex;align-items:center;justify-content:center;gap:14px}
+.foot-row span{max-width:420px;line-height:1.6}
+#sticker9,#sticker9m{width:min(90px,22vw);animation:bob 3.6s ease-in-out infinite}
+
+/* sticker 10 + twin: sa letter pagbukas */
+#sticker10{
+  position:absolute;right:-10px;top:-18px;width:min(90px,20vw);
+  animation:spin10 6s linear infinite;pointer-events:none;z-index:2;
+}
+#sticker10m{
+  position:absolute;left:-10px;top:-18px;width:min(90px,20vw);
+  animation:spin10 6s linear infinite;pointer-events:none;z-index:2;
+}
+@keyframes spin10{0%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}100%{transform:rotate(-8deg)}}
+
+.btn{
+  margin-top:26px;font-family:'Baloo 2',cursive;font-weight:700;
+  font-size:clamp(1rem,4vw,1.15rem);
+  background:var(--hibiscus);color:#fff;border:none;border-radius:999px;
+  padding:15px 34px;cursor:pointer;box-shadow:0 6px 0 #D44E69;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 0 #D44E69}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #D44E69}
+.btn:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+
+.waves{position:absolute;left:0;right:0;bottom:-2px;z-index:1;line-height:0}
+.waves svg{width:100%;height:90px;display:block}
+
+/* ---------- sections ---------- */
+.section{position:relative;z-index:1;padding:74px 20px;max-width:760px;margin:0 auto}
+.section h2{font-family:'Baloo 2',cursive;font-weight:700;font-size:clamp(1.7rem,6vw,2.4rem);text-align:center;margin-bottom:8px;color:var(--sea)}
+.section p.lead{text-align:center;color:#4A7A88;margin-bottom:26px}
+
+.gift-wrap{position:relative;width:100%;display:grid;place-items:center;padding:10px 0}
+.gift{width:150px;height:150px;display:grid;place-items:center;background:none;border:none;cursor:pointer;transition:transform .2s ease}
+.gift:hover{transform:scale(1.06) rotate(-3deg)}
+.gift.shake{animation:shakeit .45s ease infinite}
+@keyframes shakeit{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.gift-hint{text-align:center;margin-top:12px;color:#6A94A0;font-style:italic}
+
+.letter{position:relative;max-height:0;overflow:hidden;opacity:0;transition:max-height .7s ease,opacity .5s ease .15s;background:#fff;border-radius:22px;box-shadow:0 18px 40px -22px rgba(12,59,78,.5);margin-top:28px}
+.letter.open{max-height:1400px;opacity:1}
+.letter-inner{padding:36px 30px;font-size:1.05rem;line-height:1.85}
+.letter-inner p+p{margin-top:16px}
+.sign{font-family:'Baloo 2',cursive;font-size:1.35rem;color:var(--hibiscus);margin-top:22px;text-align:right}
+
+/* ---------- scrapbook photo collage (6 photos) ---------- */
+.scrap{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:26px 18px;margin-top:34px;padding:0 6px;
+}
+.tile{
+  position:relative;aspect-ratio:.82;
+  padding:10px 10px 38px;border-radius:4px;
+  background:linear-gradient(135deg,#BFE6EE,#8FD0E4) content-box, #fff;
+  box-shadow:0 14px 24px -12px rgba(12,59,78,.55);
+  display:grid;place-items:center;
+  color:rgba(255,255,255,.95);font-family:'Baloo 2',cursive;font-size:1.3rem;
+  transition:transform .25s ease;
+}
+.tile::before{                        /* washi tape */
+  content:"";position:absolute;top:-11px;left:50%;
+  width:70px;height:22px;margin-left:-35px;
+  background:rgba(255,210,90,.8);
+  box-shadow:0 2px 4px rgba(12,59,78,.18);
+  transform:rotate(-4deg);z-index:2;
+}
+.tile:nth-child(even)::before{background:rgba(127,217,245,.8);transform:rotate(3deg)}
+.tile img{
+  position:absolute;top:10px;left:10px;right:10px;bottom:38px;
+  width:calc(100% - 20px);height:calc(100% - 48px);
+  object-fit:cover;opacity:0;transition:opacity .5s ease;
+}
+.tile img.ready{opacity:1}
+.tile:nth-child(1){transform:rotate(-3deg)}
+.tile:nth-child(2){transform:rotate(2.5deg) translateY(10px)}
+.tile:nth-child(3){transform:rotate(-1.5deg)}
+.tile:nth-child(4){transform:rotate(2deg) translateY(8px)}
+.tile:nth-child(5){transform:rotate(-2.5deg)}
+.tile:nth-child(6){transform:rotate(1.5deg) translateY(10px)}
+.tile:nth-child(7){transform:rotate(-1.5deg)}
+.tile:nth-child(8){transform:rotate(1.5deg) translateY(6px)}
+.tile:hover{transform:rotate(0deg) scale(1.05);z-index:3}
+
+/* landscape tiles (photo7 & photo8) */
+.tile.wide{grid-column:1/-1;aspect-ratio:1.3}
+@media (min-width:640px){
+  .scrap{grid-template-columns:repeat(6,1fr);gap:30px 22px}
+  .tile{grid-column:span 2}
+  .tile.wide{grid-column:span 3}
+}
+
+.reasons-section{
+  background:var(--sand);
+  border-radius:28px;
+  padding-top:56px;padding-bottom:56px;
+}
+
+footer{text-align:center;padding:20px 20px 60px;color:#6A94A0;position:relative;z-index:1}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body class="locked">
+
+<!-- ---------- PASSWORD GATE ---------- -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="emoji">🔒</div>
+    <h2>This is for you, Lachi</h2>
+    <p>For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, to give you hope and a future.</p>
+    <p>Jeremiah 29:11</p>
+    <form class="gate-form" id="gateForm" autocomplete="off">
+      <input type="password" id="gateInput" placeholder="Password" inputmode="text">
+      <button type="submit">Sign In</button>
+    </form>
+    <p class="gate-error" id="gateError"></p>
+  </div>
+</div>
+
+
+<div class="floaties" id="floaties"></div>
+
+<header class="hero">
+  <div class="doodles" aria-hidden="true">
+    <!-- sketched star -->
+    <svg class="d1" viewBox="0 0 60 60"><path d="M30 4 L34 24 L52 22 L36 32 L44 50 L30 38 L16 50 L24 32 L8 22 L26 24 Z"/></svg>
+    <!-- loose wave -->
+    <svg class="d2" viewBox="0 0 80 30"><path d="M2 15c8-14 16-14 24 0s16 14 24 0 16-14 24 0"/></svg>
+    <!-- open heart outline -->
+    <svg class="d3" viewBox="0 0 40 36"><path d="M20 33C6 24 2 16 2 10 2 4 7 1 12 1c4 0 7 3 8 6 1-3 4-6 8-6 5 0 10 3 10 9 0 6-4 14-18 23Z"/></svg>
+    <!-- spiral squiggle -->
+    <svg class="d4" viewBox="0 0 70 70"><path d="M35 35c6-4 6-12-2-14-10-3-18 6-16 16 3 13 18 20 30 13 15-9 18-28 6-38"/></svg>
+    <!-- small dot trail -->
+    <svg class="d5" viewBox="0 0 30 60"><path d="M4 4h.01M14 14h.01M9 26h.01M20 34h.01M12 46h.01M22 54h.01" stroke-width="4"/></svg>
+    <!-- underline flourish -->
+    <svg class="d6" viewBox="0 0 60 20"><path d="M2 14c10-10 20-10 28-2 6 6 14 8 28-4"/></svg>
+    <!-- 5-petal flower -->
+    <svg class="d7 flower" viewBox="0 0 50 50">
+      <circle cx="25" cy="10" r="7"/><circle cx="40" cy="20" r="7"/><circle cx="34" cy="38" r="7"/>
+      <circle cx="16" cy="38" r="7"/><circle cx="10" cy="20" r="7"/><circle cx="25" cy="24" r="3.4"/>
+    </svg>
+    <!-- small flower -->
+    <svg class="d8 flower" viewBox="0 0 40 40">
+      <circle cx="20" cy="8" r="6"/><circle cx="32" cy="17" r="6"/><circle cx="27" cy="31" r="6"/>
+      <circle cx="13" cy="31" r="6"/><circle cx="8" cy="17" r="6"/><circle cx="20" cy="19" r="2.8"/>
+    </svg>
+    <!-- flower with stem -->
+    <svg class="d9 flower" viewBox="0 0 40 60">
+      <circle cx="20" cy="12" r="6"/><circle cx="30" cy="19" r="6"/><circle cx="26" cy="30" r="6"/>
+      <circle cx="14" cy="30" r="6"/><circle cx="10" cy="19" r="6"/><circle cx="20" cy="21" r="2.6"/>
+      <path d="M20 27v28M20 42c-4 0-8 3-9 8M20 36c4 0 7 2 9 6"/>
+    </svg>
+  </div>
+  <!-- blue flower blooms -->
+  <div class="flower-wrap fw1">
+    <svg viewBox="0 0 64 64" fill="none">
+      <g class="flower-petals">
+        <path d="M32 32c0-12-8-20-8-20s8 4 8 20Z" fill="#7FD9F5" opacity=".9"/>
+        <path d="M32 32c10-6 22-4 22-4s-10 8-22 4Z" fill="#5CC3E8" opacity=".9"/>
+        <path d="M32 32c6 10 4 22 4 22s-8-10-4-22Z" fill="#7FD9F5" opacity=".9"/>
+        <path d="M32 32c-10 6-22 4-22 4s10-8 22-4Z" fill="#5CC3E8" opacity=".9"/>
+        <path d="M32 32c8 4 14 14 14 14s-12-2-14-14Z" fill="#9FE3F7" opacity=".85"/>
+        <path d="M32 32c-8-4-14-14-14-14s12 2 14 14Z" fill="#9FE3F7" opacity=".85"/>
+      </g>
+      <circle cx="32" cy="32" r="6" fill="#FFD25A"/>
+    </svg>
+  </div>
+  <div class="flower-wrap fw2">
+    <svg viewBox="0 0 64 64" fill="none">
+      <g class="flower-petals">
+        <path d="M32 32c0-12-8-20-8-20s8 4 8 20Z" fill="#7FD9F5" opacity=".9"/>
+        <path d="M32 32c10-6 22-4 22-4s-10 8-22 4Z" fill="#5CC3E8" opacity=".9"/>
+        <path d="M32 32c6 10 4 22 4 22s-8-10-4-22Z" fill="#7FD9F5" opacity=".9"/>
+        <path d="M32 32c-10 6-22 4-22 4s10-8 22-4Z" fill="#5CC3E8" opacity=".9"/>
+        <path d="M32 32c8 4 14 14 14 14s-12-2-14-14Z" fill="#9FE3F7" opacity=".85"/>
+        <path d="M32 32c-8-4-14-14-14-14s12 2 14 14Z" fill="#9FE3F7" opacity=".85"/>
+      </g>
+      <circle cx="32" cy="32" r="6" fill="#FFD25A"/>
+    </svg>
+  </div>
+
+  <div class="hero-inner">
+    <p class="eyebrow">October 30, 2026 &middot; HAPPY BIRTHDAY LACHICA CHERIEME BALDIVIA</p>
+    <h1 id="title">LACHICA THE GREAT</h1>
+    <p class="sub">HI LACHI, I'M STITCH </p>
+
+
+    <!-- STICKER SLOT 8 + mirror twin: images/sticker8.png (lumulutang sa magkabilang gilid ng hero) -->
+    <img id="sticker8" class="sticker" src="images/sticker8.png" alt="">
+    <img id="sticker8m" class="sticker mirror" src="images/sticker8.png" alt="">
+    <!-- STICKER SLOT 1: images/sticker1.png (walang twin) -->
+    <img id="sticker1" class="sticker" src="images/sticker1.png" alt="">
+    <svg class="buddy" id="buddy" viewBox="0 0 220 180" fill="none" aria-hidden="true">
+      <ellipse cx="110" cy="160" rx="62" ry="9" fill="#000" opacity=".18"/>
+      <path d="M40 104c0-36 32-62 72-62s68 24 68 60c0 28-24 50-62 50-14 0-24 6-34 14 2-10 2-16-2-20-26-8-42-24-42-42Z" fill="#7FE3DE"/>
+      <path d="M178 96c12-6 26-14 34-24-2 16-6 30-14 40-6 8-14 4-20-16Z" fill="#45C7C4"/>
+      <circle cx="90" cy="96" r="11" fill="#0C3B4E"/><circle cx="94" cy="92" r="4" fill="#fff"/>
+      <circle cx="132" cy="96" r="11" fill="#0C3B4E"/><circle cx="136" cy="92" r="4" fill="#fff"/>
+      <path d="M100 118c6 7 16 7 22 0" stroke="#0C3B4E" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="72" cy="112" r="7" fill="#FF9AAE" opacity=".8"/>
+      <circle cx="150" cy="112" r="7" fill="#FF9AAE" opacity=".8"/>
+      <path d="M110 44c-4-10 2-18 10-18-4 6-2 12 4 16" stroke="#FFD25A" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+
+    <button class="btn" id="confettiBtn">Click this 🎉</button>
+  </div>
+
+  <div class="waves">
+    <svg viewBox="0 0 1440 90" preserveAspectRatio="none">
+      <path d="M0 40c160 30 300-20 480-10s320 50 480 34 320-44 480-30v56H0Z" fill="#FFF4E2"/>
+    </svg>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <!-- STICKER SLOT 2 + mirror twin: images/sticker2.png (sumisilip sa magkabilang gilid) -->
+    <img id="sticker2" class="sticker" src="images/sticker2.png" alt="">
+    <img id="sticker2m" class="sticker mirror" src="images/sticker2.png" alt="">
+
+    <h2>I have a gift for you</h2>
+    <p class="lead"></p>
+
+    <div class="gift-wrap">
+      <!-- STICKER SLOT 3 + mirror twin: images/sticker3.png (magkabilang gilid ng gift) -->
+      <img id="sticker3" class="sticker" src="images/sticker3.png" alt="">
+      <img id="sticker3m" class="sticker mirror" src="images/sticker3.png" alt="">
+      <button class="gift" id="gift" aria-expanded="false" aria-controls="letter">
+        <svg viewBox="0 0 120 120" width="150" height="150" aria-hidden="true">
+          <rect x="14" y="46" width="92" height="62" rx="10" fill="#FF6E8A"/>
+          <rect x="8" y="32" width="104" height="24" rx="8" fill="#FF8AA1"/>
+          <rect x="52" y="32" width="16" height="76" fill="#FFD25A"/>
+          <path d="M60 32c-14-2-22-8-22-16s14-8 18 0c2 6 4 12 4 16Zm0 0c14-2 22-8 22-16s-14-8-18 0c-2 6-4 12-4 16Z" fill="#FFD25A"/>
+        </svg>
+      </button>
+    </div>
+    <p class="gift-hint" id="giftHint">tap the gift ✨</p>
+
+    <div class="letter" id="letter">
+      <!-- STICKER SLOT 10 + mirror twin: images/sticker10.png (umiikot sa gilid ng letter) -->
+      <img id="sticker10" class="sticker" src="images/sticker10.png" alt="">
+      <img id="sticker10m" class="sticker mirror" src="images/sticker10.png" alt="">
+      <div class="letter-inner">
+        <p></p>
+        <p>To: Lachi</p>
+        <p>Psalm 118:24 This is the day that the Lord has made; let us rejoice and be glad in it.</p>
+        <p>Hi Lachi, Happy Birthday! I hope you enjoy your day and get everything you deserve it. I wish you nothing but happiness, success, and good health. I hope this new year brings you more reasons to smile, beautiful memories to cherish, and opportunities to grow into the person you want to be. Thank you lachiii mah wife for being you haha... Keep chasing your dreams, take care of yourself and don't forget to enjoy the little things in life. I hope your birthday is as special as you are! Happy Birthday ulit.</p>
+        <p>i miss you wife HAHAHA Enjoy your day, ingat ka palagi and God bless you Engr.!</p>
+        <p>Psalm 20:4 May he give you the desire of your heart and make all your plans succeed.</p>
+        <p class="sign">— Christian 💙</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <!-- STICKER SLOT 5 + mirror twin: images/sticker5.png (tumatango sa taas na mga sulok) -->
+    <img id="sticker5" class="sticker" src="images/sticker5.png" alt="">
+    <img id="sticker5m" class="sticker mirror" src="images/sticker5.png" alt="">
+    <!-- STICKER SLOT 6 + mirror twin: images/sticker6.png (nakabalanse sa baba na mga sulok) -->
+    <img id="sticker6" class="sticker" src="images/sticker6.png" alt="">
+    <img id="sticker6m" class="sticker mirror" src="images/sticker6.png" alt="">
+
+    <h2>heyyy Wife HAHAHAHAHA</h2>
+
+    <!--
+      SCRAPBOOK PHOTO COLLAGE (8 photos: photo7 at photo8 ay landscape/pahalang)
+      Ilagay ang mga picture sa folder na "images" at pangalanan:
+      photo1.jpg hanggang photo8.jpg
+    -->
+    <div class="scrap">
+      <figure class="tile"><span>1</span><img data-name="photo1" alt=""></figure>
+      <figure class="tile"><span>2</span><img data-name="photo2" alt=""></figure>
+      <figure class="tile"><span>3</span><img data-name="photo3" alt=""></figure>
+      <figure class="tile"><span>4</span><img data-name="photo4" alt=""></figure>
+      <figure class="tile"><span>5</span><img data-name="photo5" alt=""></figure>
+      <figure class="tile"><span>6</span><img data-name="photo6" alt=""></figure>
+      <figure class="tile wide"><span>7</span><img data-name="photo7" alt=""></figure>
+      <figure class="tile wide"><span>8</span><img data-name="photo8" alt=""></figure>
+    </div>
+  </section>
+
+  <section class="section reasons-section">
+    <!-- STICKER SLOT 7 + mirror twin: images/sticker7.png (sumasayaw sa magkabilang gilid) -->
+    <img id="sticker7" class="sticker" src="images/sticker7.png" alt="">
+    <img id="sticker7m" class="sticker mirror" src="images/sticker7.png" alt="">
+
+    <div class="bouquet" aria-hidden="true">
+      <svg viewBox="0 0 260 210" fill="none">
+        <!-- stems -->
+        <path d="M130 205c-3-40-3-72 5-95" stroke="#2E7A88" stroke-width="3" stroke-linecap="round"/>
+        <path d="M130 205c11-34 27-60 45-77" stroke="#2E7A88" stroke-width="3" stroke-linecap="round"/>
+        <path d="M130 205c-13-32-31-56-53-70" stroke="#2E7A88" stroke-width="3" stroke-linecap="round"/>
+        <path d="M130 205c18-26 38-44 58-56" stroke="#2E7A88" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M130 205c-16-24-36-42-58-52" stroke="#2E7A88" stroke-width="2.6" stroke-linecap="round"/>
+        <!-- leaves -->
+        <g fill="#7FE3DE" opacity=".85">
+          <path d="M110 150c-10-2-18-10-19-20 10 1 18 9 19 20Z"/>
+          <path d="M150 140c10-3 17-12 17-22-10 2-17 11-17 22Z"/>
+          <path d="M96 110c-9-4-15-13-14-23 9 3 15 12 14 23Z"/>
+          <path d="M166 108c9-5 14-14 13-24-9 4-14 13-13 24Z"/>
+        </g>
+        <!-- rose blooms, layered blue tones -->
+        <g>
+          <circle cx="130" cy="96" r="24" fill="#3E8FB0"/>
+          <circle cx="130" cy="96" r="24" fill="none" stroke="#26637C" stroke-width="1.4"/>
+          <path d="M118 96c0-8 5-14 12-15M130 81c7 1 12 7 12 15M142 96c0 8-5 14-12 15M130 111c-7-1-12-7-12-15" stroke="#EAF7F8" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="130" cy="96" r="7" fill="#EAF7F8" opacity=".6"/>
+        </g>
+        <g>
+          <circle cx="88" cy="82" r="19" fill="#5FB6D6"/>
+          <circle cx="88" cy="82" r="19" fill="none" stroke="#2E7A96" stroke-width="1.2"/>
+          <path d="M79 82c0-6 4-11 9-12M88 70c5 1 9 6 9 12M97 82c0 6-4 11-9 12M88 94c-5-1-9-6-9-12" stroke="#EAF7F8" stroke-width="1.6" stroke-linecap="round"/>
+        </g>
+        <g>
+          <circle cx="174" cy="80" r="19" fill="#5FB6D6"/>
+          <circle cx="174" cy="80" r="19" fill="none" stroke="#2E7A96" stroke-width="1.2"/>
+          <path d="M165 80c0-6 4-11 9-12M174 68c5 1 9 6 9 12M183 80c0 6-4 11-9 12M174 92c-5-1-9-6-9-12" stroke="#EAF7F8" stroke-width="1.6" stroke-linecap="round"/>
+        </g>
+        <g>
+          <circle cx="62" cy="112" r="15" fill="#8FD0E4"/>
+          <circle cx="62" cy="112" r="15" fill="none" stroke="#3E8FA8" stroke-width="1.1"/>
+          <path d="M55 112c0-4.5 3-8 7-9M62 103c4 1 7 4.5 7 9M69 112c0 4.5-3 8-7 9M62 121c-4-1-7-4.5-7-9" stroke="#F2FAFB" stroke-width="1.3" stroke-linecap="round"/>
+        </g>
+        <g>
+          <circle cx="200" cy="110" r="15" fill="#8FD0E4"/>
+          <circle cx="200" cy="110" r="15" fill="none" stroke="#3E8FA8" stroke-width="1.1"/>
+          <path d="M193 110c0-4.5 3-8 7-9M200 101c4 1 7 4.5 7 9M207 110c0 4.5-3 8-7 9M200 119c-4-1-7-4.5-7-9" stroke="#F2FAFB" stroke-width="1.3" stroke-linecap="round"/>
+        </g>
+        <!-- baby's breath dots -->
+        <g fill="#DDF3F5">
+          <circle cx="107" cy="66" r="3.4"/><circle cx="153" cy="64" r="3.4"/>
+          <circle cx="70" cy="90" r="2.8"/><circle cx="192" cy="88" r="2.8"/>
+          <circle cx="122" cy="58" r="2.6"/><circle cx="140" cy="60" r="2.6"/>
+        </g>
+        <!-- ribbon -->
+        <path d="M100 172c20 11 40 11 60 0" stroke="#FFD25A" stroke-width="4" stroke-linecap="round"/>
+        <path d="M96 182c24 13 48 13 68 0" stroke="#FFD25A" stroke-width="4" stroke-linecap="round"/>
+        <path d="M100 172c-6 8-6 16 0 22M160 172c6 8 6 16 0 22" stroke="#FFD25A" stroke-width="3.4" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-row">
+    <!-- STICKER SLOT 9 + mirror twin: images/sticker9.png (magkabilang gilid ng footer text) -->
+    <img id="sticker9" class="sticker" src="images/sticker9.png" alt="">
+    <span>Thank you for being someone worth making something special for. 💙</span>
+    <img id="sticker9m" class="sticker mirror" src="images/sticker9.png" alt="">
+  </div>
+</footer>
+
+<script>
+/* ---------- SETTINGS: palitan mo lang 'to ---------- */
+const HER_NAME   = "LACHI";              
+/* -------------------------------------------------- */
+
+/* bouncing title letters */
+const title = document.getElementById('title');
+const text  = HER_NAME ? `Happy Birthday, ${HER_NAME}!` : "Happy Birthday!";
+title.textContent = '';
+[...text].forEach((ch, i) => {
+  const s = document.createElement('span');
+  s.className = 'letter';
+  s.textContent = ch === ' ' ? '\u00A0' : ch;
+  s.style.animationDelay = (i * 0.055) + 's';
+  title.appendChild(s);
+});
+
+/* show each sticker only if the file actually loads */
+function markReady(img, id) {
+  img.classList.add('ready');
+  if (id === 'sticker1') document.getElementById('buddy').style.display = 'none';
+}
+[
+  'sticker1',
+  'sticker2','sticker2m',
+  'sticker3','sticker3m',
+  'sticker5','sticker5m',
+  'sticker6','sticker6m',
+  'sticker7','sticker7m',
+  'sticker8','sticker8m',
+  'sticker9','sticker9m',
+  'sticker10','sticker10m'
+].forEach(id => {
+  const img = document.getElementById(id);
+  if (!img) return;
+  if (img.complete && img.naturalWidth > 0) markReady(img, id);
+  else img.addEventListener('load', () => markReady(img, id));
+});
+
+/* heart collage: hinahanap ang photo1 ... photo10 (jpg, jpeg, png, webp) */
+document.querySelectorAll('.tile img').forEach(img => {
+  const base = img.dataset.name;
+  const exts = ['jpg','jpeg','png','webp','JPG','JPEG','PNG'];
+  let i = 0;
+  img.addEventListener('load', () => img.classList.add('ready'));
+  img.addEventListener('error', () => {
+    i++;
+    if (i < exts.length) img.src = `images/${base}.${exts[i]}`;
+    else img.remove();   // walang file, blue placeholder na lang ang matitira
+  });
+  img.src = `images/${base}.${exts[0]}`;
+});
+
+/* floating hearts & bubbles */
+const bits = ['💙','💠','🫧','⭐','🌸','🐚'];
+const box  = document.getElementById('floaties');
+for (let i = 0; i < 26; i++) {
+  const el = document.createElement('div');
+  el.className = 'floaty';
+  el.textContent = bits[Math.floor(Math.random() * bits.length)];
+  el.style.left = Math.random() * 100 + '%';
+  el.style.fontSize = (14 + Math.random() * 26) + 'px';
+  el.style.animationDuration = (11 + Math.random() * 14) + 's';
+  el.style.animationDelay = (Math.random() * 14) + 's';
+  box.appendChild(el);
+}
+
+/* confetti */
+function confetti(count = 90) {
+  const colors = ['#FF6E8A','#FFD25A','#45C7C4','#7FE3DE','#FFFFFF'];
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    const size = 6 + Math.random() * 8;
+    Object.assign(p.style, {
+      position:'fixed', zIndex:99, top:'-20px',
+      left: Math.random() * 100 + 'vw',
+      width: size + 'px', height: size * 0.6 + 'px',
+      background: colors[Math.floor(Math.random() * colors.length)],
+      borderRadius: Math.random() > .5 ? '50%' : '2px',
+      pointerEvents:'none'
+    });
+    document.body.appendChild(p);
+    const fall = 700 + window.innerHeight + Math.random() * 300;
+    p.animate([
+      { transform:'translateY(0) rotate(0deg)', opacity:1 },
+      { transform:`translateY(${fall}px) translateX(${-120 + Math.random()*240}px) rotate(${Math.random()*900}deg)`, opacity:.9 }
+    ], { duration: 2600 + Math.random()*1800, easing:'cubic-bezier(.2,.6,.4,1)' })
+     .onfinish = () => p.remove();
+  }
+}
+
+document.getElementById('confettiBtn').addEventListener('click', () => confetti());
+window.addEventListener('load', () => setTimeout(() => confetti(60), 600));
+
+/* gift opens the letter */
+const gift   = document.getElementById('gift');
+const letter = document.getElementById('letter');
+const hint   = document.getElementById('giftHint');
+gift.addEventListener('click', () => {
+  const open = letter.classList.toggle('open');
+  gift.setAttribute('aria-expanded', open);
+  hint.textContent = open ? '' : 'tap the gift ✨';
+  if (open) {
+    confetti(60);
+    gift.classList.add('shake');
+    setTimeout(() => gift.classList.remove('shake'), 500);
+    setTimeout(() => letter.scrollIntoView({ behavior:'smooth', block:'center' }), 350);
+  }
+});
+
+/* ---------- password gate ---------- */
+const GATE_PASSWORD = "iloveyou";   
+
+const gate      = document.getElementById('gate');
+const gateForm  = document.getElementById('gateForm');
+const gateInput = document.getElementById('gateInput');
+const gateError = document.getElementById('gateError');
+
+gateForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const answer = gateInput.value.trim().toLowerCase();
+  if (answer === GATE_PASSWORD.toLowerCase()) {
+    gate.classList.add('hidden');
+    document.body.classList.remove('locked');
+    gateError.textContent = '';
+  } else {
+    gateError.textContent = 'Try mo ulit 🙂';
+    gateInput.value = '';
+    gateInput.focus();
+  }
+});
+</script>
+</body>
+</html>
